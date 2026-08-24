@@ -1,74 +1,77 @@
-<h1 align="center">Jellyfin Web</h1>
-<h3 align="center">Part of the <a href="https://jellyfin.org">Jellyfin Project</a></h3>
-
----
-
 <p align="center">
-<img alt="Logo Banner" src="https://raw.githubusercontent.com/jellyfin/jellyfin-ux/master/branding/SVG/banner-logo-solid.svg?sanitize=true"/>
-<br/>
-<br/>
-<a href="https://github.com/jellyfin/jellyfin-web">
-<img alt="GPL 2.0 License" src="https://img.shields.io/github/license/jellyfin/jellyfin-web.svg"/>
-</a>
-<a href="https://github.com/jellyfin/jellyfin-web/releases">
-<img alt="Current Release" src="https://img.shields.io/github/release/jellyfin/jellyfin-web.svg"/>
-</a>
-<a href="https://translate.jellyfin.org/projects/jellyfin/jellyfin-web/?utm_source=widget">
-<img src="https://translate.jellyfin.org/widgets/jellyfin/-/jellyfin-web/svg-badge.svg" alt="Translation Status"/>
-</a>
-<br/>
-<a href="https://opencollective.com/jellyfin">
-<img alt="Donate" src="https://img.shields.io/opencollective/all/jellyfin.svg?label=backers"/>
-</a>
-<a href="https://features.jellyfin.org">
-<img alt="Feature Requests" src="https://img.shields.io/badge/fider-vote%20on%20features-success.svg"/>
-</a>
-<a href="https://matrix.to/#/+jellyfin:matrix.org">
-<img alt="Chat on Matrix" src="https://img.shields.io/matrix/jellyfin:matrix.org.svg?logo=matrix"/>
-</a>
-<a href="https://www.reddit.com/r/jellyfin">
-<img alt="Join our Subreddit" src="https://img.shields.io/badge/reddit-r%2Fjellyfin-%23FF5700.svg"/>
-</a>
+  <img alt="Gummisaurus" src="src/assets/branding/gummisaurus-banner-light.svg" width="720">
 </p>
 
-Jellyfin Web is the frontend used for most of the clients available for end users, such as desktop browsers, Android, and iOS. We welcome all contributions and pull requests! If you have a larger feature in mind please open an issue so we can discuss the implementation before you start. Translations can be improved very easily from our <a href="https://translate.jellyfin.org/projects/jellyfin/jellyfin-web">Weblate</a> instance. Look through the following graphic to see if your native language could use some work!
+# Gummisaurus
 
-<a href="https://translate.jellyfin.org/engage/jellyfin/?utm_source=widget">
-<img src="https://translate.jellyfin.org/widgets/jellyfin/-/jellyfin-web/multi-auto.svg" alt="Detailed Translation Status"/>
-</a>
+Gummisaurus is an independent, open source media client for Amazon Vega OS. It
+connects to servers running [Jellyfin](https://jellyfin.org/) and is maintained
+by Tallest Giant LLC.
 
-## Build Process
+This project is not affiliated with or endorsed by Jellyfin, Inc. or Amazon.
+Jellyfin is a trademark of Jellyfin, Inc. Gummisaurus uses its own name and
+visual identity in accordance with the Jellyfin branding policy.
 
-### Dependencies
+## Status
 
-- [Node.js](https://nodejs.org/en/download)
-- npm (included in Node.js)
+Gummisaurus is in initial development and is not ready for general use. The
+first milestone is a testable VPKG for Vega OS 1.2 based on Vega SDK 0.24.
 
-### Getting Started
+## Architecture
 
-1. Clone or download this repository.
+The project forks `jellyfin-web` and packages its TV interface inside a native
+React Native for Vega shell. This keeps broad Jellyfin server compatibility and
+an upstream merge path while using Vega's WebView, hardware media stack, remote
+input, and system media controls.
 
-   ```sh
-   git clone https://github.com/jellyfin/jellyfin-web.git
-   cd jellyfin-web
-   ```
+The inherited web client already includes TV navigation, Vega user-agent
+detection, HLS playback, trickplay, media-segment actions for intros and
+credits, and next-episode autoplay. Native Vega playback will replace WebView
+playback only where device testing shows a concrete compatibility or
+performance need.
 
-2. Install build dependencies in the project directory.
+## Repository Layout
 
-   ```sh
-   npm install
-   ```
+- `src/`: the GPL-licensed web client fork
+- `vega/`: the Vega SDK 0.24 application shell
+- `webpack.vega.js`: builds the web client directly into the Vega package
 
-3. Run the web client with webpack for local development.
+## Build
 
-   ```sh
-   npm start
-   ```
+Requirements:
 
-4. Build the client with sourcemaps available.
+- Node.js 24 and npm 11 for the web client
+- Node.js 22 or newer for the Vega shell
+- Vega SDK 0.24
 
-   ```sh
-   npm run build:development
-   ```
+```sh
+npm ci
+npm --prefix vega ci
+npm run build:vega:debug
+```
 
-Review the [Contributing Guide](./CONTRIBUTING.md) for more information on our process and tech stack.
+The VPKG is written under `vega/build/`. A production package can be built with
+`npm run build:vega:release`.
+
+## Compatibility Priorities
+
+- User-supplied local HTTP and remote HTTPS servers
+- Password and Quick Connect authentication
+- Movie, television, music, and live TV libraries
+- Direct play with reliable transcoding fallback
+- Audio tracks, subtitles, trickplay, intro and credit segments
+- Server-supplied pre-rolls and next-episode autoplay
+- Optional media-request and access-gateway integrations
+
+## Upstream
+
+The `upstream` remote tracks
+[`jellyfin/jellyfin-web`](https://github.com/jellyfin/jellyfin-web). Changes that
+benefit the wider Jellyfin ecosystem should be kept suitable for upstreaming
+where practical.
+
+## License
+
+Gummisaurus is distributed under the GNU General Public License version 2 or,
+at your option, any later version. Existing Jellyfin copyright and attribution
+notices remain intact. See [LICENSE](LICENSE).

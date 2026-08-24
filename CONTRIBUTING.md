@@ -1,10 +1,16 @@
-# Contributing to Jellyfin Web
+# Contributing to Gummisaurus
 
-Thanks for taking the time to contribute! :purple_heart:
-Jellyfin is an entirely volunteer-driven project, so without contributors like you it could not exist!
+Thanks for taking the time to contribute. Gummisaurus is an independent fork
+maintained by Tallest Giant LLC and open to community contributions.
 
 Below are some general guidelines and information about this project.
-If you have any questions, please join one of our [development chat rooms](https://jellyfin.org/contact) to discuss them!
+Use [GitHub Discussions](https://github.com/brontodev/gummisaurus/discussions)
+for design questions before starting a large change.
+
+The web layer follows the upstream Jellyfin Web engineering conventions below
+to keep changes reviewable and suitable for upstreaming. Jellyfin's own pull
+request and communication policies apply only when contributing directly to
+the upstream project.
 
 ## Contributor Guidelines
 
@@ -26,10 +32,8 @@ If you have any questions, please join one of our [development chat rooms](https
 
 ### Pull Requests
 
-* **MUST** follow [project guidelines](https://jellyfin.org/docs/general/contributing/development#pull-request-guidelines).
-  * **SHOULD NOT** use "Conventional Commits" for titles or commit messages.
-  * **SHOULD NOT** rebase once reviews are in progress.
-* **MUST** follow the [LLM development policy](https://jellyfin.org/docs/general/contributing/llm-policies).
+* **SHOULD NOT** use "Conventional Commits" for titles or commit messages.
+* **SHOULD NOT** rebase once reviews are in progress.
 * **MUST** test that the change works as expected before marking a PR as ready for review.
 * **MUST** fully complete the PR template. Failing to do so will result in the PR being closed as invalid without review.
 * **SHOULD** represent a singular focus (i.e. a PR to fix a bug should not include unrelated refactoring).

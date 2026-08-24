@@ -1,0 +1,8 @@
+{
+  "project": {
+    "identifier": "gummisaurus-web"
+  },
+  "platform": {
+    "default": "vega_os"
+  }
+}

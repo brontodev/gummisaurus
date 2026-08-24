@@ -4,6 +4,12 @@ declare module '*.png' {
     export = value;
 }
 
+declare module '*.svg' {
+    // Asset imports are handled by webpack.
+    const value: string;
+    export default value;
+}
+
 declare module '*.scss' {
     // style imports are handled by the bundler
     const value: string;

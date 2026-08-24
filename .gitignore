@@ -2,6 +2,11 @@
 dist
 web
 node_modules
+vega/assets/web
+vega/build
+vega/buildinfo.json
+vega/bundle
+vega/kepler-build
 
 # test coverage
 coverage
