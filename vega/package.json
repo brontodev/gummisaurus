@@ -10,8 +10,7 @@
     "typecheck": "tsc --noEmit",
     "test": "jest --colors",
     "lint": "ESLINT_USE_FLAT_CONFIG=false eslint src test --ext .ts,.tsx",
-    "prebuild:release": "node -e \"const version = process.env.BUILD_VERSION; const number = process.env.BUILD_NUMBER; if (!version || !/^[1-9]\\\\d*$/.test(number || '')) throw new Error('BUILD_VERSION and a positive BUILD_NUMBER are required');\"",
-    "build:release": "react-native build-vega --build-type Release --build-version \"$BUILD_VERSION\" --build-number \"$BUILD_NUMBER\"",
+    "build:release": "node scripts/build-release.mjs",
     "build:debug": "react-native build-vega --build-type Debug"
   },
   "dependencies": {
