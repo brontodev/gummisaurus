@@ -59,3 +59,32 @@ jobs:
 
       - name: Run ${{ matrix.command }} ⚙️
         run: npm run ${{ matrix.command }}
+
+  vega:
+    name: Vega shell checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.commit }}
+          show-progress: false
+
+      - name: Setup node environment
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: vega/package-lock.json
+
+      - name: Install Vega dependencies
+        run: npm --prefix vega ci --no-audit
+
+      - name: Typecheck Vega shell
+        run: npm --prefix vega run typecheck
+
+      - name: Lint Vega shell
+        run: npm --prefix vega run lint
+
+      - name: Test Vega shell
+        run: npm --prefix vega test -- --runInBand

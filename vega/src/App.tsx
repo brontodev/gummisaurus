@@ -10,19 +10,37 @@ import type {
   WebViewNavigationEvent,
 } from '@amazon-devices/webview/dist/types/WebViewTypes';
 import * as React from 'react';
-import {useRef} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {useState} from 'react';
+import {
+  ActivityIndicator,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+
+type LoadState = 'loading' | 'ready' | 'error';
 
 export const App = () => {
-  const webRef = useRef(null);
+  const [loadState, setLoadState] = useState<LoadState>('loading');
+  const [loadError, setLoadError] = useState('');
+  const [reloadKey, setReloadKey] = useState(0);
+  const [retryFocused, setRetryFocused] = useState(false);
 
   usePreventHideSplashScreen();
   const hideSplashScreen = useHideSplashScreenCallback();
 
+  const showLoadError = (message: string) => {
+    setLoadError(message);
+    setLoadState('error');
+    hideSplashScreen();
+  };
+
   return (
     <View style={styles.container}>
       <WebView
-        ref={webRef}
+        key={reloadKey}
+        testID="gummisaurus-webview"
         style={styles.webview}
         allowSystemKeyEvents
         allowsDefaultMediaControl
@@ -32,28 +50,120 @@ export const App = () => {
         mediaPlaybackRequiresUserAction={false}
         mixedContentMode="compatibility"
         source={{uri: 'file:///pkg/assets/web/index.html'}}
+        onLoadStart={() => {
+          setLoadState('loading');
+        }}
         onLoad={(_event: WebViewNavigationEvent) => {
+          setLoadError('');
+          setLoadState('ready');
           hideSplashScreen();
         }}
         onError={({
           nativeEvent: {code, url, description},
         }: WebViewErrorEvent) => {
           console.error(`[WebView] (${code}: ${url}) ${description}`);
+          showLoadError(
+            description || 'The bundled web interface failed to load.',
+          );
         }}
         onHttpError={({
           nativeEvent: {url, statusCode, description},
         }: WebViewHttpErrorEvent) => {
-          console.error(`[WebView HTTP] (${statusCode}: ${url}) ${description}`);
+          console.error(
+            `[WebView HTTP] (${statusCode}: ${url}) ${description}`,
+          );
         }}
         onSslError={({code, url, description}: SslErrorData) => {
           console.error(`[WebView TLS] (${code}: ${url}) ${description}`);
         }}
       />
+      {loadState === 'loading' && (
+        <View testID="gummisaurus-loading" style={styles.overlay}>
+          <ActivityIndicator color="#ffb43b" size="large" />
+          <Text style={styles.loadingText}>Starting Gummisaurus</Text>
+        </View>
+      )}
+      {loadState === 'error' && (
+        <View testID="gummisaurus-error" style={styles.overlay}>
+          <Text style={styles.errorTitle}>Gummisaurus could not start</Text>
+          <Text style={styles.errorText}>{loadError}</Text>
+          <Pressable
+            accessibilityRole="button"
+            hasTVPreferredFocus
+            onBlur={() => setRetryFocused(false)}
+            onFocus={() => setRetryFocused(true)}
+            onPress={() => {
+              setLoadError('');
+              setLoadState('loading');
+              setReloadKey((key) => key + 1);
+            }}
+            style={[
+              styles.retryButton,
+              retryFocused && styles.retryButtonFocused,
+            ]}>
+            <Text style={styles.retryText}>Try again</Text>
+          </Pressable>
+        </View>
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {flex: 1},
-  webview: {backgroundColor: '#101010'},
+  container: {
+    backgroundColor: '#101010',
+    flex: 1,
+  },
+  webview: {
+    backgroundColor: '#101010',
+    flex: 1,
+  },
+  overlay: {
+    alignItems: 'center',
+    backgroundColor: '#17120f',
+    bottom: 0,
+    justifyContent: 'center',
+    left: 0,
+    padding: 48,
+    position: 'absolute',
+    right: 0,
+    top: 0,
+  },
+  loadingText: {
+    color: '#f7f2ea',
+    fontSize: 28,
+    marginTop: 24,
+  },
+  errorTitle: {
+    color: '#f7f2ea',
+    fontSize: 40,
+    fontWeight: '700',
+    textAlign: 'center',
+  },
+  errorText: {
+    color: '#cfc5b8',
+    fontSize: 24,
+    marginTop: 16,
+    maxWidth: 720,
+    textAlign: 'center',
+  },
+  retryButton: {
+    backgroundColor: '#ef7c2f',
+    borderColor: 'transparent',
+    borderRadius: 12,
+    borderWidth: 4,
+    marginTop: 32,
+    paddingHorizontal: 36,
+    paddingVertical: 16,
+    transform: [{scale: 1}],
+  },
+  retryButtonFocused: {
+    borderColor: '#fff2bd',
+    transform: [{scale: 1.08}],
+  },
+  retryText: {
+    color: '#17120f',
+    fontSize: 26,
+    fontWeight: '700',
+  },
 });

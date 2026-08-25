@@ -50,8 +50,12 @@ npm --prefix vega ci
 npm run build:vega:debug
 ```
 
-The VPKG is written under `vega/build/`. A production package can be built with
-`npm run build:vega:release`.
+The VPKG is written under `vega/build/`. A production package requires an
+explicit version and increasing build number:
+
+```sh
+BUILD_VERSION=0.1.0 BUILD_NUMBER=1 npm run build:vega:release
+```
 
 ## Compatibility Priorities
 

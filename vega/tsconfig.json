@@ -2,10 +2,7 @@
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
-    "types": [
-      "jest",
-      "@amazon-devices/react-native-kepler"
-    ],
+    "types": ["jest", "@amazon-devices/react-native-kepler"],
     "lib": [
       "es2019",
       "es2020.bigint",
@@ -35,7 +32,12 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": false
   },
-  "exclude": [
-    "**/node_modules/**"
-  ]
+  "include": [
+    "index.js",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "test/**/*.ts",
+    "test/**/*.tsx"
+  ],
+  "exclude": ["node_modules"]
 }
