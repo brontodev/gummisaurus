@@ -21,6 +21,8 @@ import {
 
 type LoadState = 'loading' | 'ready' | 'error';
 
+const WEB_CLIENT_URL = 'file:///pkg/assets/web/index.html';
+
 export const App = () => {
   const [loadState, setLoadState] = useState<LoadState>('loading');
   const [loadError, setLoadError] = useState('');
@@ -49,7 +51,7 @@ export const App = () => {
         javaScriptEnabled
         mediaPlaybackRequiresUserAction={false}
         mixedContentMode="compatibility"
-        source={{uri: 'file:///pkg/assets/web/index.html'}}
+        source={{uri: WEB_CLIENT_URL}}
         onLoadStart={() => {
           setLoadState('loading');
         }}
@@ -61,17 +63,26 @@ export const App = () => {
         onError={({
           nativeEvent: {code, url, description},
         }: WebViewErrorEvent) => {
-          console.error(`[WebView] (${code}: ${url}) ${description}`);
+          const message = `(${code}: ${url}) ${description}`;
+          if (url !== WEB_CLIENT_URL) {
+            console.log(`[WebView resource] ${message}`);
+            return;
+          }
+
+          console.error(`[WebView] ${message}`);
           showLoadError(
             description || 'The bundled web interface failed to load.',
           );
         }}
         onHttpError={({
-          nativeEvent: {url, statusCode, description},
+          nativeEvent: {url, statusCode, description, isMainFrame},
         }: WebViewHttpErrorEvent) => {
-          console.error(
-            `[WebView HTTP] (${statusCode}: ${url}) ${description}`,
-          );
+          const message = `(${statusCode}: ${url}) ${description}`;
+          if (isMainFrame) {
+            console.error(`[WebView HTTP] ${message}`);
+          } else {
+            console.log(`[WebView HTTP resource] ${message}`);
+          }
         }}
         onSslError={({code, url, description}: SslErrorData) => {
           console.error(`[WebView TLS] (${code}: ${url}) ${description}`);

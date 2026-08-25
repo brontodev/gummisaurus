@@ -13,7 +13,7 @@ import Events, { type Event } from 'utils/events';
 import inputManager from 'scripts/inputManager';
 import dom from 'utils/dom';
 import browser from 'scripts/browser';
-import imageLoader from 'components/images/imageLoader';
+import { lazyChildren } from 'components/images/imageLoader';
 import layoutManager from 'components/layoutManager';
 import { playbackManager } from 'components/playback/playbackmanager';
 import itemShortcuts from 'components/shortcuts';
@@ -306,7 +306,7 @@ const ItemsContainer: FC<PropsWithChildren<ItemsContainerProps>> = ({
 
         if (getItemsHtml) {
             itemsContainer.innerHTML = getItemsHtml();
-            imageLoader.lazyChildren(itemsContainer);
+            lazyChildren(itemsContainer);
         }
 
         if (hasActiveElement) {

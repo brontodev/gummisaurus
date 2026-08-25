@@ -1,27 +1,15 @@
 import DefaultConfig from '../../config.json';
-import fetchLocal from '../../utils/fetchLocal.ts';
 
 let data;
 
 async function getConfig() {
-    if (data) return Promise.resolve(data);
-    try {
-        const response = await fetchLocal('config.json', {
-            cache: 'no-store'
-        });
-
-        if (!response.ok) {
-            throw new Error('network response was not ok');
-        }
-
-        data = await response.json();
-
-        return data;
-    } catch (error) {
-        console.warn('failed to fetch the web config file:', error);
-        data = DefaultConfig;
-        return data;
+    if (!data) {
+        // Vega WebView blocks fetches between packaged files, so Gummisaurus
+        // uses its compiled configuration as a standalone client.
+        data = { ...DefaultConfig, multiserver: true };
     }
+
+    return data;
 }
 
 export function getIncludeCorsCredentials() {

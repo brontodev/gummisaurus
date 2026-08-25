@@ -26,6 +26,7 @@ describe('App', () => {
   beforeEach(() => {
     mockHideSplashScreen.mockClear();
     jest.spyOn(console, 'error').mockImplementation(() => undefined);
+    jest.spyOn(console, 'log').mockImplementation(() => undefined);
   });
 
   afterEach(() => {
@@ -45,6 +46,14 @@ describe('App', () => {
     expect(mockHideSplashScreen).toHaveBeenCalledTimes(1);
   });
 
+  it('routes Fire TV remote and media controls to the web client', () => {
+    const {getByTestId} = render(<App />);
+    const webview = getByTestId('gummisaurus-webview');
+
+    expect(webview.props.allowSystemKeyEvents).toBe(true);
+    expect(webview.props.allowsDefaultMediaControl).toBe(true);
+  });
+
   it('shows a recoverable error when the web client fails to load', () => {
     const {getByTestId, getByText} = render(<App />);
 
@@ -60,6 +69,27 @@ describe('App', () => {
     expect(getByText('Web client unavailable')).toBeTruthy();
     expect(console.error).toHaveBeenCalledWith(
       '[WebView] (-1: file:///pkg/assets/web/index.html) Web client unavailable',
+    );
+    expect(mockHideSplashScreen).toHaveBeenCalledTimes(1);
+  });
+
+  it('keeps running when a dependent web resource fails to load', () => {
+    const {getByTestId, queryByTestId} = render(<App />);
+
+    fireEvent(getByTestId('gummisaurus-webview'), 'load', {
+      nativeEvent: {url: 'file:///pkg/assets/web/index.html'},
+    });
+    fireEvent(getByTestId('gummisaurus-webview'), 'error', {
+      nativeEvent: {
+        code: -10,
+        description: 'net::ERR_ACCESS_DENIED',
+        url: 'file:///web/custom-theme.css?v=19',
+      },
+    });
+
+    expect(queryByTestId('gummisaurus-error')).toBeNull();
+    expect(console.log).toHaveBeenCalledWith(
+      '[WebView resource] (-10: file:///web/custom-theme.css?v=19) net::ERR_ACCESS_DENIED',
     );
     expect(mockHideSplashScreen).toHaveBeenCalledTimes(1);
   });

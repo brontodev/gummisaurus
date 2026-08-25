@@ -17,7 +17,7 @@ import { ServerConnections } from 'lib/jellyfin-apiclient';
 import { getItemTypeIcon, getLibraryIcon } from 'utils/image';
 
 import focusManager from '../focusManager';
-import imageLoader from '../images/imageLoader';
+import { getPrimaryImageAspectRatio, lazyChildren } from '../images/imageLoader';
 import indicators from '../indicators/indicators';
 import itemHelper from '../itemHelper';
 import layoutManager from '../layoutManager';
@@ -80,7 +80,7 @@ function getImageWidth(shape, screenWidth, isOrientationLandscape) {
 export function setCardData(items, options) {
     options.shape = options.shape || 'auto';
 
-    const primaryImageAspectRatio = imageLoader.getPrimaryImageAspectRatio(items);
+    const primaryImageAspectRatio = getPrimaryImageAspectRatio(items);
 
     if (['auto', 'autohome', 'autooverflow', 'autoVertical'].includes(options.shape)) {
         const requestedShape = options.shape;
@@ -1081,7 +1081,7 @@ export function buildCards(items, options) {
             options.itemsContainer.cardBuilderHtml = html;
         }
 
-        imageLoader.lazyChildren(options.itemsContainer);
+        lazyChildren(options.itemsContainer);
     } else {
         options.itemsContainer.innerHTML = html;
         options.itemsContainer.cardBuilderHtml = null;

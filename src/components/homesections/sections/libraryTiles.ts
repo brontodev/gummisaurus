@@ -2,7 +2,7 @@ import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models/base
 
 import cardBuilder from 'components/cardbuilder/cardBuilder';
 import { getBackdropShape } from 'components/cardbuilder/utils/shape';
-import imageLoader from 'components/images/imageLoader';
+import { lazyChildren } from 'components/images/imageLoader';
 import globalize from 'lib/globalize';
 
 import type { SectionOptions } from './section';
@@ -42,5 +42,5 @@ export function loadLibraryTiles(
     }
 
     elem.innerHTML = html;
-    imageLoader.lazyChildren(elem);
+    lazyChildren(elem);
 }

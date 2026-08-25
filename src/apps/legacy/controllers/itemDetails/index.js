@@ -14,7 +14,7 @@ import cardBuilder from 'components/cardbuilder/cardBuilder';
 import { buildCardImage } from 'components/cardbuilder/cardImage';
 import { getPortraitShape, getSquareShape } from 'components/cardbuilder/utils/shape';
 import confirm from 'components/confirm/confirm';
-import imageLoader from 'components/images/imageLoader';
+import { lazyChildren, lazyImage, setLazyImage } from 'components/images/imageLoader';
 import itemContextMenu from 'components/itemContextMenu';
 import itemHelper from 'components/itemHelper';
 import mediaInfo from 'components/mediainfo/mediainfo';
@@ -158,7 +158,7 @@ function renderSeriesTimerSchedule(page, apiClient, seriesTimerId) {
         const html = getProgramScheduleHtml(result.Items);
         const scheduleTab = page.querySelector('#seriesTimerSchedule');
         scheduleTab.innerHTML = html;
-        imageLoader.lazyChildren(scheduleTab);
+        lazyChildren(scheduleTab);
     });
 }
 
@@ -542,7 +542,7 @@ function renderHeaderBackdrop(page, item, apiClient) {
     const imgUrl = getItemBackdropImageUrl(apiClient, item, { maxWidth: dom.getScreenWidth() }, false);
 
     if (imgUrl) {
-        imageLoader.lazyImage(itemBackdropElement, imgUrl);
+        lazyImage(itemBackdropElement, imgUrl);
         hasbackdrop = true;
     } else {
         itemBackdropElement.style.backgroundImage = '';
@@ -697,7 +697,7 @@ function renderLogo(page, item, apiClient) {
 
     if (url) {
         detailLogo.classList.remove('hide');
-        imageLoader.setLazyImage(detailLogo, url);
+        setLazyImage(detailLogo, url);
     } else {
         detailLogo.classList.add('hide');
     }
@@ -752,7 +752,7 @@ function renderLinks(page, item) {
     }
 }
 
-function renderDetailImage(apiClient, elem, item, loader) {
+function renderDetailImage(apiClient, elem, item) {
     const html = buildCardImage(
         apiClient,
         item,
@@ -760,18 +760,13 @@ function renderDetailImage(apiClient, elem, item, loader) {
     );
 
     elem.innerHTML = html;
-    loader.lazyChildren(elem);
+    lazyChildren(elem);
 }
 
 function renderImage(page, item, apiClient) {
     page.querySelectorAll('.detailImageContainer')
         .forEach(elem => {
-            renderDetailImage(
-                apiClient,
-                elem,
-                item,
-                imageLoader
-            );
+            renderDetailImage(apiClient, elem, item);
         });
 }
 
@@ -813,7 +808,7 @@ function renderNextUp(page, item, user) {
         });
         const itemsContainer = section.querySelector('.nextUpItems');
         itemsContainer.innerHTML = html;
-        imageLoader.lazyChildren(itemsContainer);
+        lazyChildren(itemsContainer);
     });
 }
 
@@ -1275,7 +1270,7 @@ function renderSimilarItems(page, item, context) {
             });
             const similarContent = similarCollapsible.querySelector('.similarContent');
             similarContent.innerHTML = html;
-            imageLoader.lazyChildren(similarContent);
+            lazyChildren(similarContent);
         });
     }
 }
@@ -1477,7 +1472,7 @@ function renderChildren(page, item) {
             childrenItemsContainer.classList.remove('padded-right');
         }
         childrenItemsContainer.innerHTML = html;
-        imageLoader.lazyChildren(childrenItemsContainer);
+        lazyChildren(childrenItemsContainer);
         if (item.Type == 'BoxSet') {
             const collectionItemTypes = [{
                 name: globalize.translate('Movies'),
@@ -1633,7 +1628,7 @@ function renderSeriesSchedule(page, item) {
         const html = getProgramScheduleHtml(result.Items, 'programdialog');
         const scheduleTab = page.querySelector('#seriesScheduleList');
         scheduleTab.innerHTML = html;
-        imageLoader.lazyChildren(scheduleTab);
+        lazyChildren(scheduleTab);
 
         loading.hide();
     });
@@ -1760,7 +1755,7 @@ function renderCollectionItemType(page, parentItem, type, items) {
     html += '</div>';
     const collectionItems = page.querySelector('.collectionItems');
     collectionItems.insertAdjacentHTML('beforeend', html);
-    imageLoader.lazyChildren(collectionItems.lastChild);
+    lazyChildren(collectionItems.lastChild);
 }
 
 function renderMusicVideos(page, item, user) {
@@ -1778,7 +1773,7 @@ function renderMusicVideos(page, item, user) {
             page.querySelector('#musicVideosCollapsible').classList.remove('hide');
             const musicVideosContent = page.querySelector('#musicVideosContent');
             musicVideosContent.innerHTML = getVideosHtml(result.Items);
-            imageLoader.lazyChildren(musicVideosContent);
+            lazyChildren(musicVideosContent);
         } else {
             page.querySelector('#musicVideosCollapsible').classList.add('hide');
         }
@@ -1791,7 +1786,7 @@ function renderAdditionalParts(page, item, user) {
             page.querySelector('#additionalPartsCollapsible').classList.remove('hide');
             const additionalPartsContent = page.querySelector('#additionalPartsContent');
             additionalPartsContent.innerHTML = getVideosHtml(result.Items);
-            imageLoader.lazyChildren(additionalPartsContent);
+            lazyChildren(additionalPartsContent);
         } else {
             page.querySelector('#additionalPartsCollapsible').classList.add('hide');
         }
@@ -1838,7 +1833,7 @@ function renderSpecials(page, item, user) {
     ServerConnections.getApiClient(item.ServerId).getSpecialFeatures(user.Id, item.Id).then(function (specials) {
         const specialsContent = page.querySelector('#specialsContent');
         specialsContent.innerHTML = getVideosHtml(specials);
-        imageLoader.lazyChildren(specialsContent);
+        lazyChildren(specialsContent);
     });
 }
 

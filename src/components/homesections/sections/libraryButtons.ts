@@ -1,7 +1,7 @@
 import type { BaseItemDto } from '@jellyfin/sdk/lib/generated-client/models/base-item-dto';
 import escapeHtml from 'escape-html';
 
-import imageLoader from 'components/images/imageLoader';
+import { lazyChildren } from 'components/images/imageLoader';
 import { appRouter } from 'components/router/appRouter';
 import globalize from 'lib/globalize';
 import imageHelper from 'utils/image';
@@ -32,5 +32,5 @@ export function loadLibraryButtons(elem: HTMLElement, userViews: BaseItemDto[]) 
     const html = getLibraryButtonsHtml(userViews);
 
     elem.innerHTML = html;
-    imageLoader.lazyChildren(elem);
+    lazyChildren(elem);
 }

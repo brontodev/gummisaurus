@@ -4,7 +4,7 @@ import Sortable from 'sortablejs';
 import itemShortcuts from '../../components/shortcuts';
 import inputManager from '../../scripts/inputManager';
 import { playbackManager } from '../../components/playback/playbackmanager';
-import imageLoader from '../../components/images/imageLoader';
+import { lazyChildren } from '../../components/images/imageLoader';
 import layoutManager from '../../components/layoutManager';
 import browser from '../../scripts/browser';
 import dom from '../../utils/dom';
@@ -441,7 +441,7 @@ function onDataFetched(result) {
 
     this.innerHTML = this.getItemsHtml(items);
 
-    imageLoader.lazyChildren(this);
+    lazyChildren(this);
 
     if (hasActiveElement) {
         setFocus(this, focusId);

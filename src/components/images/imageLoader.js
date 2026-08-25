@@ -1,5 +1,6 @@
 import Worker from './blurhash.worker.ts'; // eslint-disable-line import/default
 import * as lazyLoader from '../lazyLoader/lazyLoaderIntersectionObserver';
+import browser from '../../scripts/browser';
 import * as userSettings from '../../scripts/settings/userSettings';
 import './style.scss';
 
@@ -161,7 +162,7 @@ function emptyImageElement(elem) {
 }
 
 export function lazyChildren(elem) {
-    if (userSettings.enableBlurhash()) {
+    if (userSettings.enableBlurhash() && !browser.vega) {
         for (const lazyElem of elem.querySelectorAll('.lazy')) {
             const blurhashstr = lazyElem.getAttribute('data-blurhash');
             if (!lazyElem.classList.contains('blurhashed', 'non-blurhashable') && blurhashstr) {
