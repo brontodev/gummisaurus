@@ -142,3 +142,87 @@
         right: 0.5em;
     }
 }
+
+.layout-tv .selectDropdownMenu {
+    width: 380px;
+    max-width: calc(100vw - 48px);
+    max-height: calc(100vh - 48px);
+    box-sizing: border-box;
+    padding: 8px;
+    border: 1px solid rgba(244, 241, 234, 0.16);
+    border-radius: 10px !important;
+    background: rgba(16, 16, 25, 0.985);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.46);
+    font-size: 18px;
+}
+
+.layout-tv .selectDropdownMenu .actionSheetContent {
+    justify-content: flex-start;
+    width: 100%;
+    padding: 4px !important;
+}
+
+.layout-tv .selectDropdownMenu .actionSheetTitle {
+    width: 100%;
+    margin: 0 0 6px !important;
+    padding: 4px 8px;
+    box-sizing: border-box;
+    color: var(--jf-palette-text-primary, #f4f1ea);
+    font-size: 20px;
+    font-weight: 580;
+    line-height: 1.2;
+    text-align: left;
+
+    [dir="rtl"] & {
+        text-align: right;
+    }
+}
+
+.layout-tv .selectDropdownMenu .actionSheetScroller-tv {
+    width: 100%;
+    min-height: 0;
+    max-width: 100%;
+    max-height: min(300px, calc(100vh - 112px));
+    box-sizing: border-box;
+    padding: 2px;
+    overscroll-behavior: contain;
+}
+
+.layout-tv .selectDropdownMenu .actionSheetMenuItem {
+    min-height: 40px;
+    margin: 1px 0;
+    padding: 4px 7px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    color: var(--jf-palette-text-primary, #f4f1ea);
+    background: transparent;
+    font-size: 18px;
+    font-weight: 520;
+    line-height: 1.2;
+}
+
+.layout-tv .selectDropdownMenu .actionsheetListItemBody {
+    min-width: 0;
+    padding: 0 4px !important;
+}
+
+.layout-tv .selectDropdownMenu .actionSheetMenuItem.show-focus:focus {
+    color: #fff !important;
+    background: var(--gummisaurus-spectrum-soft, linear-gradient(105deg, rgba(98, 223, 255, 0.18), rgba(77, 95, 255, 0.2) 42%, rgba(146, 92, 255, 0.2) 72%, rgba(255, 91, 114, 0.15))) !important;
+    border-color: rgba(98, 223, 255, 0.3) !important;
+    outline: 2px solid #8de8ff;
+    outline-offset: -2px;
+    box-shadow: none !important;
+}
+
+.layout-tv .selectDropdownMenu .actionsheetMenuItemIcon {
+    color: var(--jf-palette-secondary-main, #62dfff);
+}
+
+.layout-tv .selectDropdownMenu .actionSheetMenuItem.show-focus:focus .actionsheetMenuItemIcon {
+    color: inherit;
+}
+
+.dialogBackdrop-selectDropdown.dialogBackdropOpened {
+    opacity: 0;
+}

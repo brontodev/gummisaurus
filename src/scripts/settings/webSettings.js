@@ -45,7 +45,7 @@ export function getServers() {
 }
 
 const baseDefaultTheme = {
-    'name': 'Dark',
+    'name': 'TBO',
     'id': 'dark',
     'default': true
 };

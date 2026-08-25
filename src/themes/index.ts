@@ -6,6 +6,8 @@ import blueradiance from './blueradiance';
 import dark from './dark';
 import light from './light';
 import purplehaze from './purplehaze';
+import sunflower from './sunflower';
+import ultraviolet from './ultraviolet';
 import wmc from './wmc';
 
 /** The default theme containing all color scheme variants. */
@@ -23,6 +25,8 @@ const DEFAULT_THEME = createTheme({
         dark,
         light,
         purplehaze,
+        sunflower,
+        ultraviolet,
         wmc
     }
 });

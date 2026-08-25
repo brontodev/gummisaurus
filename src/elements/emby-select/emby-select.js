@@ -7,6 +7,10 @@ import 'webcomponents.js/webcomponents-lite';
 const EmbySelectPrototype = Object.create(HTMLSelectElement.prototype);
 
 function enableNativeMenu() {
+    if (browser.vega) {
+        return false;
+    }
+
     // WebView 2 creates dropdown that doesn't work with controller.
     if (browser.edgeUwp || browser.xboxOne) {
         return false;
@@ -37,16 +41,22 @@ function setValue(select, value) {
 function showActionSheet(select) {
     const labelElem = getLabel(select);
     const title = labelElem ? (labelElem.textContent || labelElem.innerText) : null;
+    const compact = browser.vega;
 
     actionsheet.show({
+        compact,
+        dialogClass: compact ? 'selectDropdownMenu' : null,
+        enableHistory: compact ? false : undefined,
         items: select.options,
         positionTo: select,
-        title: title
+        positionX: compact ? 'left' : undefined,
+        positionY: compact ? 'bottom' : undefined,
+        title: compact ? null : title
 
     }).then(function (value) {
         setValue(select, value);
         triggerChange(select);
-    });
+    }).catch(() => { /* Selection cancelled. */ });
 }
 
 function getLabel(select) {
@@ -136,4 +146,3 @@ document.registerElement('emby-select', {
     prototype: EmbySelectPrototype,
     extends: 'select'
 });
-

@@ -27,24 +27,24 @@ $action-hover: palette.$action-hover !default;
 $divider: palette.$divider !default;
 
 // Components
-$appBar-defaultBg: #202020 !default;
+$appBar-defaultBg: #101019 !default;
 // NOTE: This color is not part of the MUI theme
-$appBar-transparentBg: rgba(0, 0, 0, 0.4) !default;
-$filledInput-bg: rgba(255, 255, 255, 0.09) !default;
+$appBar-transparentBg: rgba(5, 5, 10, 0.82) !default;
+$filledInput-bg: rgba(18, 18, 28, 0.92) !default;
 // NOTE: Defaults to $filledInput-bg so dark themes keep their seamless look
 $filledInput-borderColor: $filledInput-bg !default;
 // NOTE: Card border radius — matches the default in card.scss; exposed as --jf-card-borderRadius for custom user themes
 $card-borderRadius: 0.2em !default;
 $alert-infoFilledBg: #0288d1 !default;
 $alert-infoFilledColor: #fff !default;
-$button-inheritContainedBg: #424242 !default;
-$button-inheritContainedHoverBg: #616161 !default;
-$snackbarContent-bg: #303030 !default;
-$snackbarContent-color: rgba(255, 255, 255, 0.87) !default;
+$button-inheritContainedBg: #181824 !default;
+$button-inheritContainedHoverBg: #242436 !default;
+$snackbarContent-bg: #181824 !default;
+$snackbarContent-color: #f4f1ea !default;
 // Secondary/accent color used for focus and interactive states.
 // Defaults to $primary-main so all existing themes are unaffected.
-$secondary-main: $primary-main !default;
-$secondary-contrastText: $primary-contrastText !default;
+$secondary-main: #62dfff !default;
+$secondary-contrastText: #05050a !default;
 // Background for legacy Jellyfin surface elements (paperList, visualCardBox, etc.).
 // Kept separate from $background-paper so themes can use a translucent overlay here
 // while $background-paper stays solid for MUI components (menus, dropdowns).
@@ -59,11 +59,13 @@ $appBar-gradient: none !default;
     --jf-palette-AppBar-transparentBg: #{$appBar-transparentBg};
     --jf-palette-AppBar-gradient: #{$appBar-gradient};
     --jf-card-borderRadius: #{$card-borderRadius};
+    --gummisaurus-spectrum: linear-gradient(90deg, #62dfff 0%, #4d5fff 31%, #925cff 65%, #ff5b72 100%);
+    --gummisaurus-spectrum-soft: linear-gradient(105deg, rgba(98, 223, 255, 0.18), rgba(77, 95, 255, 0.2) 42%, rgba(146, 92, 255, 0.2) 72%, rgba(255, 91, 114, 0.15));
 }
 
 * {
     scrollbar-width: thin;
-    scrollbar-color: #3b3b3b #202020;
+    scrollbar-color: #535164 #05050a;
 }
 
 .skinHeader,
@@ -101,10 +103,6 @@ html {
     background-color: var(--jf-palette-AppBar-transparentBg, $appBar-transparentBg);
     background-image: none;
     backdrop-filter: none !important;
-
-    .layout-tv & {
-        background: none;
-    }
 }
 
 .pageTitleWithDefaultLogo {
@@ -576,7 +574,7 @@ a[data-role="button"],
 }
 
 ::-webkit-scrollbar-track-piece {
-    background-color: #3b3b3b;
+    background-color: #05050a;
 }
 
 .layout-desktop ::-webkit-scrollbar,
@@ -588,7 +586,7 @@ a[data-role="button"],
 ::-webkit-scrollbar-thumb:horizontal,
 ::-webkit-scrollbar-thumb:vertical {
     border-radius: 2px;
-    background: center no-repeat #888;
+    background: center no-repeat #535164;
 }
 
 .timeslotHeaders-desktop::-webkit-scrollbar {

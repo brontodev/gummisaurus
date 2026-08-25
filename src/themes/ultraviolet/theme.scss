@@ -1,0 +1,60 @@
+@use "../_base/theme" with (
+    $dark: true,
+    $background-default: #08050f,
+    $background-defaultImage: radial-gradient(circle at 84% -8%, rgba(124, 77, 255, 0.17), transparent 34rem),
+    $background-paper: #151021,
+    $primary-main: #7c4dff,
+    $primary-dark: #5d2fe0,
+    $primary-light: #ad8cff,
+    $primary-hover: rgba(124, 77, 255, 0.2),
+    $primary-contrastText: #fff,
+    $secondary-main: #d27bff,
+    $secondary-contrastText: #0a0511,
+    $text-primary: #f7f1ff,
+    $text-secondary: #b9adc9,
+    $action-focus: rgba(124, 77, 255, 0.2),
+    $action-hover: rgba(210, 123, 255, 0.1),
+    $divider: rgba(247, 241, 255, 0.12),
+    $appBar-defaultBg: #0e0918,
+    $appBar-transparentBg: rgba(8, 5, 15, 0.84),
+    $surface-overlay: rgba(21, 16, 33, 0.96),
+    $filledInput-bg: #1b1228,
+    $filledInput-borderColor: rgba(247, 241, 255, 0.12),
+    $button-inheritContainedBg: #211631,
+    $button-inheritContainedHoverBg: #302047,
+    $snackbarContent-bg: #211631,
+    $snackbarContent-color: #f7f1ff
+);
+
+:root {
+    --gummisaurus-spectrum: linear-gradient(90deg, #6266ff 0%, #7c4dff 38%, #a855f7 70%, #d946ef 100%);
+    --gummisaurus-spectrum-soft: linear-gradient(105deg, rgba(98, 102, 255, 0.18), rgba(124, 77, 255, 0.22) 45%, rgba(217, 70, 239, 0.16));
+}
+
+.defaultCardBackground1 {
+    background-color: #251743;
+}
+
+.defaultCardBackground2 {
+    background-color: #32205a;
+}
+
+.defaultCardBackground3 {
+    background-color: #44266f;
+}
+
+.defaultCardBackground4 {
+    background-color: #1e1534;
+}
+
+.defaultCardBackground5 {
+    background-color: #562778;
+}
+
+.detailRibbon {
+    background: rgba(14, 9, 24, 0.86);
+
+    .layout-tv & {
+        background: none;
+    }
+}

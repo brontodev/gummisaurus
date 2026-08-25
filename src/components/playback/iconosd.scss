@@ -3,12 +3,13 @@
     top: 7%;
     right: 3%;
     z-index: 100000;
-    background: #222;
-    background: rgba(0, 0, 0, 0.8);
+    background: #101019;
+    background: rgba(16, 16, 25, 0.94);
     padding: 1em;
     color: #fff;
     backdrop-filter: blur(5px);
-    border-radius: 0.25em;
+    border: 0.06em solid rgba(244, 241, 234, 0.16);
+    border-radius: 0.55em;
     transition: opacity 200ms ease-out;
 }
 
@@ -25,12 +26,12 @@
 .iconOsdProgressOuter {
     margin: 1.5em 0.25em 1em;
     height: 0.35em;
-    background: #222;
+    background: #181824;
     border-radius: 0.25em;
 }
 
 .iconOsdProgressInner {
-    background: #00a4dc;
+    background: var(--jf-palette-primary-main, #4d5fff);
     height: 100%;
     border-radius: 0.25em;
 }

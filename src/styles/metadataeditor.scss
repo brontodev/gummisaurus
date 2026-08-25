@@ -46,7 +46,7 @@
 }
 
 .jstree-default .jstree-wholerow-clicked {
-    background: #00a4dc !important;
+    background: var(--jf-palette-primary-main, #4d5fff) !important;
 }
 
 .metadataSidebarIcon {

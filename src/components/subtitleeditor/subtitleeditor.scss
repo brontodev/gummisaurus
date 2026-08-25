@@ -3,8 +3,8 @@
 }
 
 .subtitleFeaturePillow {
-    background: #00a4dc;
-    color: #000;
+    background: var(--jf-palette-primary-main, #4d5fff);
+    color: var(--jf-palette-primary-contrastText, #fff);
     padding: 0.3em 1em;
     border-radius: 1000em;
     margin-right: 0.25em;

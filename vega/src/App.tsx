@@ -90,7 +90,7 @@ export const App = () => {
       />
       {loadState === 'loading' && (
         <View testID="gummisaurus-loading" style={styles.overlay}>
-          <ActivityIndicator color="#ffb43b" size="large" />
+          <ActivityIndicator color="#62dfff" size="large" />
           <Text style={styles.loadingText}>Starting Gummisaurus</Text>
         </View>
       )}
@@ -122,16 +122,16 @@ export const App = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#101010',
+    backgroundColor: '#05050a',
     flex: 1,
   },
   webview: {
-    backgroundColor: '#101010',
+    backgroundColor: '#05050a',
     flex: 1,
   },
   overlay: {
     alignItems: 'center',
-    backgroundColor: '#17120f',
+    backgroundColor: '#05050a',
     bottom: 0,
     justifyContent: 'center',
     left: 0,
@@ -141,25 +141,25 @@ const styles = StyleSheet.create({
     top: 0,
   },
   loadingText: {
-    color: '#f7f2ea',
+    color: '#f4f1ea',
     fontSize: 28,
     marginTop: 24,
   },
   errorTitle: {
-    color: '#f7f2ea',
+    color: '#f4f1ea',
     fontSize: 40,
     fontWeight: '700',
     textAlign: 'center',
   },
   errorText: {
-    color: '#cfc5b8',
+    color: '#9d9ba6',
     fontSize: 24,
     marginTop: 16,
     maxWidth: 720,
     textAlign: 'center',
   },
   retryButton: {
-    backgroundColor: '#ef7c2f',
+    backgroundColor: '#4d5fff',
     borderColor: 'transparent',
     borderRadius: 12,
     borderWidth: 4,
@@ -169,11 +169,11 @@ const styles = StyleSheet.create({
     transform: [{scale: 1}],
   },
   retryButtonFocused: {
-    borderColor: '#fff2bd',
+    borderColor: '#8de8ff',
     transform: [{scale: 1.08}],
   },
   retryText: {
-    color: '#17120f',
+    color: '#fff',
     fontSize: 26,
     fontWeight: '700',
   },

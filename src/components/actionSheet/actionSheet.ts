@@ -26,6 +26,7 @@ interface Options {
     items: OptionItem[];
     border?: boolean;
     callback?: (id: string) => void;
+    compact?: boolean;
     dialogClass?: string;
     enableHistory?: boolean;
     entryAnimationDuration?: number;
@@ -36,6 +37,7 @@ interface Options {
     offsetLeft?: number;
     offsetTop?: number;
     positionTo?: Element | null;
+    positionX?: string;
     positionY?: string;
     resolveOnClick?: boolean | (string | null)[];
     shaded?: boolean;
@@ -93,18 +95,29 @@ function getPosition(positionTo: Element, options: Options, dlg: HTMLElement) {
 
     const pos = getOffsets([positionTo])[0];
 
-    if (options.positionY !== 'top') {
-        pos.top += (pos.height || 0) / 2;
-    }
-
-    pos.left += (pos.width || 0) / 2;
-
     const height = dlg.offsetHeight || 300;
     const width = dlg.offsetWidth || 160;
 
-    // Account for popup size
-    pos.top -= height / 2;
-    pos.left -= width / 2;
+    if (options.positionY === 'bottom') {
+        const anchorTop = pos.top;
+        pos.top += (pos.height || 0) + 6;
+
+        if (pos.top + height > windowHeight - 10) {
+            pos.top = anchorTop - height - 6;
+        }
+    } else {
+        if (options.positionY !== 'top') {
+            pos.top += (pos.height || 0) / 2;
+        }
+
+        pos.top -= height / 2;
+    }
+
+    if (options.positionX === 'right') {
+        pos.left += (pos.width || 0) - width;
+    } else if (options.positionX !== 'left') {
+        pos.left += ((pos.width || 0) - width) / 2;
+    }
 
     // Avoid showing too close to the bottom
     const overflowX = pos.left + width - windowWidth;
@@ -150,7 +163,7 @@ export function show(options: Options) {
 
     let isFullscreen;
 
-    if (layoutManager.tv) {
+    if (layoutManager.tv && !options.compact) {
         dialogOptions.size = 'fullscreen';
         isFullscreen = true;
         dialogOptions.autoFocus = true;
@@ -160,7 +173,7 @@ export function show(options: Options) {
         dialogOptions.exitAnimation = options.exitAnimation;
         dialogOptions.entryAnimationDuration = options.entryAnimationDuration || 140;
         dialogOptions.exitAnimationDuration = options.exitAnimationDuration || 100;
-        dialogOptions.autoFocus = false;
+        dialogOptions.autoFocus = layoutManager.tv;
     }
 
     const dlg = dialogHelper.createDialog(dialogOptions);
@@ -200,7 +213,7 @@ export function show(options: Options) {
         icons.push(itemIcon || '');
     }
 
-    if (layoutManager.tv) {
+    if (layoutManager.tv && !options.compact) {
         html += `<button is="paper-icon-button-light" class="btnCloseActionSheet hide-mouse-idle-tv" tabindex="-1" title="${globalize.translate('ButtonBack')}">
                      <span class="material-icons arrow_back" aria-hidden="true"></span>
                  </button>`;
@@ -374,6 +387,11 @@ export function show(options: Options) {
         dialogHelper.open(dlg).catch(e => {
             console.warn('DialogHelper.open error', e);
         });
+
+        if (options.compact) {
+            const dialog = dlg as HTMLElement & { backdrop?: HTMLElement };
+            dialog.backdrop?.classList.add('dialogBackdrop-selectDropdown');
+        }
 
         const pos = options.positionTo && dialogOptions.size !== 'fullscreen' ? getPosition(options.positionTo, options, dlg) : null;
 
